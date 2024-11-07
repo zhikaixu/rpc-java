@@ -3,6 +3,7 @@ package com.zachary.rpc_java.Server;
 import com.zachary.rpc_java.Server.provider.ServiceProvider;
 import com.zachary.rpc_java.Server.server.RpcServer;
 import com.zachary.rpc_java.Server.server.impl.SimpleRPCServer;
+import com.zachary.rpc_java.Server.server.impl.ThreadPoolRPCServer;
 import com.zachary.rpc_java.common.service.UserService;
 import com.zachary.rpc_java.common.service.impl.UserServiceImpl;
 
@@ -14,7 +15,7 @@ public class RpcServerMain {
 
         serviceProvider.provideServiceInterface(userService);
 
-        RpcServer rpcServer = new SimpleRPCServer(serviceProvider);
+        RpcServer rpcServer = new ThreadPoolRPCServer(serviceProvider);
 
         rpcServer.start(9999);
     }
