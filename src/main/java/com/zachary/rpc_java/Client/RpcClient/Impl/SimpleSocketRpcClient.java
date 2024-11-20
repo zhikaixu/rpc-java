@@ -1,5 +1,6 @@
-package com.zachary.rpc_java.Client;
+package com.zachary.rpc_java.Client.RpcClient.Impl;
 
+import com.zachary.rpc_java.Client.RpcClient.RpcClient;
 import com.zachary.rpc_java.common.message.RpcRequest;
 import com.zachary.rpc_java.common.message.RpcResponse;
 
@@ -8,10 +9,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-@Deprecated
-public class IOClient {
-    // 负责底层与服务端的通信，发送request，返回response
-    public static RpcResponse sendRequest(String host, int port, RpcRequest request) {
+/**
+ * 是对原来的IOClient的重写
+ */
+public class SimpleSocketRpcClient implements RpcClient {
+    private String host;
+    private int port;
+    public SimpleSocketRpcClient(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    @Override
+    public RpcResponse sendRequest(RpcRequest request) {
         try {
             Socket socket = new Socket(host, port);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
