@@ -14,6 +14,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
 
+import java.net.InetSocketAddress;
+
 public class NettyRpcClient implements RpcClient {
     private String host;
     private int port;
@@ -35,6 +37,10 @@ public class NettyRpcClient implements RpcClient {
 
     @Override
     public RpcResponse sendRequest(RpcRequest request) {
+        // 从注册中心获取host, port
+        InetSocketAddress address = serviceCenter.serviceDiscovery(request.getInterfaceName());
+        String host = address.getHostName();
+        int port = address.getPort();
         try {
             // 创建channelFuture对象，代表着一个操作事件，sync方法表示
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();

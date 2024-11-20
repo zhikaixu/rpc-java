@@ -2,7 +2,7 @@ package com.zachary.rpc_java.Server.server.impl;
 
 import com.zachary.rpc_java.Server.provider.ServiceProvider;
 import com.zachary.rpc_java.Server.server.RpcServer;
-import com.zachary.rpc_java.Server.server.netty.nettyInitializer.NettyServerInitializer;
+import com.zachary.rpc_java.Server.netty.nettyInitializer.NettyServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;

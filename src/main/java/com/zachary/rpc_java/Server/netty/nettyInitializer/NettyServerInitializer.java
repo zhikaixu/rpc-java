@@ -1,7 +1,7 @@
-package com.zachary.rpc_java.Server.server.netty.nettyInitializer;
+package com.zachary.rpc_java.Server.netty.nettyInitializer;
 
 import com.zachary.rpc_java.Server.provider.ServiceProvider;
-import com.zachary.rpc_java.Server.server.netty.handler.NettyRPCServerHandler;
+import com.zachary.rpc_java.Server.netty.handler.NettyRPCServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

@@ -1,4 +1,4 @@
-package com.zachary.rpc_java.Server.server.netty.handler;
+package com.zachary.rpc_java.Server.netty.handler;
 
 import com.zachary.rpc_java.Server.provider.ServiceProvider;
 import com.zachary.rpc_java.common.message.RpcRequest;
