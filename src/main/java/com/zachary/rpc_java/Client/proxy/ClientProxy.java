@@ -1,8 +1,7 @@
 package com.zachary.rpc_java.Client.proxy;
 
-import com.zachary.rpc_java.Client.RpcClient.Impl.NettyRpcClient;
-import com.zachary.rpc_java.Client.RpcClient.Impl.SimpleSocketRpcClient;
-import com.zachary.rpc_java.Client.RpcClient.RpcClient;
+import com.zachary.rpc_java.Client.rpcClient.Impl.NettyRpcClient;
+import com.zachary.rpc_java.Client.rpcClient.RpcClient;
 import com.zachary.rpc_java.common.message.RpcRequest;
 import com.zachary.rpc_java.common.message.RpcResponse;
 import lombok.AllArgsConstructor;
@@ -16,18 +15,8 @@ public class ClientProxy implements InvocationHandler {
 
     private RpcClient rpcClient;
 
-    public ClientProxy(String host, int port, int choose) {
-        switch (choose) {
-            case 0:
-                rpcClient = new SimpleSocketRpcClient(host, port);
-                break;
-            case 1:
-                rpcClient = new NettyRpcClient(host, port);
-        }
-    }
-
-    public ClientProxy(String host, int port) {
-        rpcClient = new NettyRpcClient(host, port);
+    public ClientProxy() {
+        rpcClient = new NettyRpcClient();
     }
 
     @Override

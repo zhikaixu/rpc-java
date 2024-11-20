@@ -1,4 +1,4 @@
-package com.zachary.rpc_java.Client.RpcClient;
+package com.zachary.rpc_java.Client.rpcClient;
 
 import com.zachary.rpc_java.common.message.RpcRequest;
 import com.zachary.rpc_java.common.message.RpcResponse;

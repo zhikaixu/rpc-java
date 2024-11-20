@@ -1,7 +1,9 @@
-package com.zachary.rpc_java.Client.RpcClient.Impl;
+package com.zachary.rpc_java.Client.rpcClient.Impl;
 
 import com.zachary.rpc_java.Client.netty.nettyInitializer.NettyClientInitializer;
-import com.zachary.rpc_java.Client.RpcClient.RpcClient;
+import com.zachary.rpc_java.Client.rpcClient.RpcClient;
+import com.zachary.rpc_java.Client.serviceCenter.ServiceCenter;
+import com.zachary.rpc_java.Client.serviceCenter.ZKServiceCenter;
 import com.zachary.rpc_java.common.message.RpcRequest;
 import com.zachary.rpc_java.common.message.RpcResponse;
 import io.netty.bootstrap.Bootstrap;
@@ -15,11 +17,12 @@ import io.netty.util.AttributeKey;
 public class NettyRpcClient implements RpcClient {
     private String host;
     private int port;
-    public static final Bootstrap bootstrap;
-    public static final EventLoopGroup eventLoopGroup;
-    public NettyRpcClient(String host, int port) {
-        this.host = host;
-        this.port = port;
+    private static final Bootstrap bootstrap;
+    private static final EventLoopGroup eventLoopGroup;
+    private ServiceCenter serviceCenter;
+
+    public NettyRpcClient() {
+        this.serviceCenter = new ZKServiceCenter();
     }
 
     // Netty客户端初始化
