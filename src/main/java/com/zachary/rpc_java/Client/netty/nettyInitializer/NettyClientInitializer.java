@@ -1,6 +1,9 @@
 package com.zachary.rpc_java.Client.netty.nettyInitializer;
 
 import com.zachary.rpc_java.Client.netty.handler.NettyClientHandler;
+import com.zachary.rpc_java.common.serializer.MyDecoder;
+import com.zachary.rpc_java.common.serializer.MyEncoder;
+import com.zachary.rpc_java.common.serializer.mySerializer.JsonSerializer;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -24,25 +27,28 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
         // addLast没有先后顺序，netty通过加入的类实现的接口来自动识别类实现的是什么功能
 
         // 消息格式 【长度】【消息体】，解决沾包问题
-        pipeline.addLast(
-                new LengthFieldBasedFrameDecoder(
-                        Integer.MAX_VALUE, 0, 4, 0, 4
-                )
-        );
+//        pipeline.addLast(
+//                new LengthFieldBasedFrameDecoder(
+//                        Integer.MAX_VALUE, 0, 4, 0, 4
+//                )
+//        );
         // 计算当前待发送消息的长度，写入到前4个字节中
-        pipeline.addLast(new LengthFieldPrepender(4));
+//        pipeline.addLast(new LengthFieldPrepender(4));
 
         // 使用Java序列化方式作为编码器，netty的自带的解码编码支持传输这种结构
-        pipeline.addLast(new ObjectEncoder());
+//        pipeline.addLast(new ObjectEncoder());
         // 使用Netty中的ObjectDecoder，用于将字节流解码为Java对象
         // 在ObjectDecoder的构造函数中传入ClassResolver对象，用于解析类名并加载相应的类
-        pipeline.addLast(new ObjectDecoder(new ClassResolver() {
-            @Override
-            public Class<?> resolve(String className) throws ClassNotFoundException {
-                return Class.forName(className);
-            }
-        }));
+//        pipeline.addLast(new ObjectDecoder(new ClassResolver() {
+//            @Override
+//            public Class<?> resolve(String className) throws ClassNotFoundException {
+//                return Class.forName(className);
+//            }
+//        }));
 
+        // 使用自定义的编码器和解码器
+        pipeline.addLast(new MyEncoder(new JsonSerializer()));
+        pipeline.addLast(new MyDecoder());
         pipeline.addLast(new NettyClientHandler());
     }
 }

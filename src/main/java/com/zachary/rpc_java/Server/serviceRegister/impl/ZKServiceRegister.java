@@ -36,13 +36,16 @@ public class ZKServiceRegister implements ServiceRegister {
             // serviceName创建成永久节点，服务提供者下线时，不删服务名，只删地址
             if (client.checkExists().forPath("/" + serviceName) == null) {
                 client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/" + serviceName);
-                // 路径地址，一个/代表一个节点
-                // debug: getServiceAddress(serviceAddress)返回的字符串中包含了/, 原因是没有使用getHostName(),而是用了getAddress()
-                String path = "/" + serviceName + "/" +getServiceAddress(serviceAddress);
-                System.out.println(path);
-                // 临时节点，服务器下线就删除节点
-                client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
+
             }
+            // 路径地址，一个/代表一个节点
+            // debug1: getServiceAddress(serviceAddress)返回的字符串中包含了/, 原因是没有使用getHostName(),而是用了getAddress()
+            // debug2: 发现client 连接zookeeper成功，zookeeper中有服务名，server也连接ZK成功，但是ZK中没有server的地址（通过ZKcli）
+            //         发现下面两行写在了上面的if中，导致server重启时不会把address存入zookeeper
+            String path = "/" + serviceName + "/" +getServiceAddress(serviceAddress);
+            System.out.println(path);
+            // 临时节点，服务器下线就删除节点
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
         } catch (Exception e) {
             System.out.println("此服务已存在");
         }
