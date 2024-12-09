@@ -5,7 +5,7 @@ import com.zachary.rpc_java.common.pojo.User;
 import com.zachary.rpc_java.common.service.UserService;
 
 public class RpcClientMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 创建代理对象
 //        ClientProxy clientProxy = new ClientProxy("127.0.0.1", 9999, 1);
         ClientProxy clientProxy = new ClientProxy();
