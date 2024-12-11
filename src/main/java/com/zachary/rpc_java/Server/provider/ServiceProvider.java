@@ -30,7 +30,7 @@ public class ServiceProvider {
     }
 
     // 注册本地服务
-    public void provideServiceInterface(Object service) {
+    public void provideServiceInterface(Object service, boolean canRetry) {
         // 通过反射得到service name
         String serviceName = service.getClass().getName();
         // 通过反射得到interfaces
@@ -42,7 +42,7 @@ public class ServiceProvider {
             // 本地注册
             interfaceProvider.put(interfaceName, service);
             // 注册中心注册
-            serviceRegister.register(interfaceName, new InetSocketAddress(host, port));
+            serviceRegister.register(interfaceName, new InetSocketAddress(host, port), canRetry);
         }
     }
 
