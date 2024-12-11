@@ -1,7 +1,9 @@
 package com.zachary.rpc_java.Server.provider;
 
+import com.zachary.rpc_java.Server.rateLimit.provider.RateLimitProvider;
 import com.zachary.rpc_java.Server.serviceRegister.ServiceRegister;
 import com.zachary.rpc_java.Server.serviceRegister.impl.ZKServiceRegister;
+import lombok.Getter;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -20,6 +22,9 @@ public class ServiceProvider {
     // 注册服务类：用于注册服务到注册中心
     // 在服务端上线时调用ServiceProvider的添加服务逻辑，使得本地注册服务时也注册服务到注册中心上
     private ServiceRegister serviceRegister;
+    // 限流器
+    @Getter
+    private RateLimitProvider rateLimitProvider;
 
     public ServiceProvider(String host, int port) {
         this.interfaceProvider = new HashMap<>();
@@ -27,6 +32,7 @@ public class ServiceProvider {
         this.host = host;
         this.port = port;
         this.serviceRegister = new ZKServiceRegister();
+        this.rateLimitProvider = new RateLimitProvider();
     }
 
     // 注册本地服务
@@ -50,4 +56,5 @@ public class ServiceProvider {
     public Object getService(String interfaceName) {
         return interfaceProvider.get(interfaceName);
     }
+
 }
