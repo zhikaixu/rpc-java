@@ -17,7 +17,7 @@ public class TokenBucketRateLimitImpl implements RateLimit {
         curCapacity = capacity;
     }
     @Override
-    public boolean getToken() {
+    public synchronized boolean getToken() {
         // 如果当前桶还有剩余，就直接返回
         if (curCapacity > 0) {
             curCapacity--;
